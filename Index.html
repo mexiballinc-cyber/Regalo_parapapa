@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Feliz Cumpleaños Papá 🎂</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      user-select: none;
+    }
+
+    body {
+      background-color: #0a0a0a;
+      color: #ffffff;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      width: 100%;
+      max-width: 420px;
+      height: 100vh;
+      max-height: 880px;
+      background: radial-gradient(circle at bottom right, rgba(0, 200, 83, 0.45), rgba(10, 10, 10, 0.95) 70%);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      box-shadow: 0 0 30px rgba(0, 230, 118, 0.2);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+
+    /* HEADER Y MENÚ HAMBURGUESA */
+    .header {
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(10px);
+      z-index: 20;
+    }
+
+    .menu-btn {
+      width: 30px;
+      height: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .menu-btn div {
+      height: 4px;
+      background-color: #ffffff;
+      border-radius: 2px;
+    }
+
+    .header-title {
+      font-size: 22px;
+      font-weight: 800;
+    }
+
+    /* Desplegable del Menú */
+    .dropdown-menu {
+      position: absolute;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: rgba(15, 15, 15, 0.95);
+      backdrop-filter: blur(15px);
+      display: none;
+      flex-direction: column;
+      border-bottom: 2px solid #00e676;
+      z-index: 15;
+    }
+
+    .dropdown-menu.active {
+      display: flex;
+    }
+
+    .menu-item {
+      padding: 15px 25px;
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+      cursor: pointer;
+    }
+
+    .menu-item:active {
+      background: rgba(0, 230, 118, 0.2);
+    }
+
+    /* SECCIONES */
+    .screen {
+      display: none;
+      flex: 1;
+      padding: 20px;
+      flex-direction: column;
+      overflow-y: auto;
+    }
+
+    .screen.active {
+      display: flex;
+    }
+
+    /* HOME */
+    .home-hero h1 { font-size: 36px; font-weight: 900; }
+    .home-hero h2 { font-size: 48px; font-weight: 900; margin-bottom: 30px; }
+    .subtitle { font-size: 18px; font-weight: 700; color: #ccc; margin-bottom: 25px; }
+
+    .nav-buttons {
+      display: flex;
+      justify-content: space-around;
+      margin-top: auto;
+      margin-bottom: 20px;
+    }
+
+    .icon-btn {
+      background: rgba(255, 255, 255, 0.08);
+      border: 2px solid rgba(255, 255, 255, 0.15);
+      border-radius: 20px;
+      width: 85px;
+      height: 85px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 40px;
+      cursor: pointer;
+    }
+
+    .icon-btn:active {
+      transform: scale(0.92);
+      border-color: #00e676;
+    }
+
+    /* MINIJUEGO FRIV STYLE */
+    .game-window {
+      background: #111;
+      border: 3px solid #00e676;
+      border-radius: 15px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      height: 380px;
+      margin-top: 10px;
+    }
+
+    .game-header {
+      background: #00e676;
+      color: #000;
+      padding: 5px 10px;
+      font-weight: bold;
+      font-size: 14px;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    .game-body {
+      flex: 1;
+      display: flex;
+      position: relative;
+    }
+
+    .game-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.1s;
+    }
+
+    .game-side:active { background: rgba(255, 255, 255, 0.1); }
+    .side-left { border-right: 1px dashed rgba(255, 255, 255, 0.2); }
+
+    .heart-icon { font-size: 50px; transition: transform 0.1s; }
+    .score { font-size: 28px; font-weight: 900; margin-top: 10px; }
+
+    /* FOTOS / COSAS DE PAPÁ */
+    .photo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 15px;
+      margin-top: 10px;
+    }
+
+    .photo-card {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      height: 120px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      font-size: 14px;
+      font-weight: bold;
+      text-align: center;
+      padding: 5px;
+    }
+
+    .photo-card span { font-size: 30px; margin-bottom: 5px; }
+
+    /* CARTAS */
+    .chat-bubble {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 15px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="app-container">
+    
+    <!-- Header -->
+    <div class="header">
+      <div class="menu-btn" onclick="toggleMenu()">
+        <div></div><div></div><div></div>
+      </div>
+      <div class="header-title" id="header-title">Inicio</div>
+      <div style="width: 30px;"></div>
+    </div>
+
+    <!-- Menú Desplegable -->
+    <div class="dropdown-menu" id="dropdown-menu">
+      <div class="menu-item" onclick="navigate('home')">🏠 Inicio</div>
+      <div class="menu-item" onclick="navigate('gracias')">✉️ Gracias Papá</div>
+      <div class="menu-item" onclick="navigate('minijuegos')">🎮 Minijuego</div>
+      <div class="menu-item" onclick="navigate('lo-mejor')">📸 Cosas de Papá</div>
+    </div>
+
+    <!-- PANTALLA: HOME -->
+    <div id="screen-home" class="screen active">
+      <div class="home-hero">
+        <h1>Feliz cumpleaños</h1>
+        <h2>Papá</h2>
+      </div>
+
+      <div class="subtitle">accede a las<br>siguientes áreas</div>
+
+      <div class="nav-buttons">
+        <div class="icon-btn" onclick="navigate('lo-mejor')">🎁</div>
+        <div class="icon-btn" onclick="navigate('minijuegos')">🎮</div>
+        <div class="icon-btn" onclick="navigate('gracias')">✉️</div>
+      </div>
+    </div>
+
+    <!-- PANTALLA: GRACIAS PAPÁ (PAUSA) -->
+    <div id="screen-gracias" class="screen">
+      <div class="chat-bubble">
+        <h3>⏳ Cargando testimonios...</h3>
+        <p style="margin-top: 8px; font-size: 14px; opacity: 0.8;">
+          Aquí irán las palabras de la familia felicitándote por tus 34 años.
+        </p>
+      </div>
+    </div>
+
+    <!-- PANTALLA: MINIJUEGOS -->
+    <div id="screen-minijuegos" class="screen">
+      <p style="text-align: center; font-size: 14px; margin-bottom: 10px;">
+        ¿Quién quiere más a papá? ¡Toca tu lado para sumar clics!
+      </p>
+
+      <div class="game-window" id="game-window">
+        <div class="game-header">
+          <span>FRIV_PAPA_V1.EXE</span>
+          <span>34 AÑOS</span>
+        </div>
+        <div class="game-body">
+          <!-- Lado Izquierdo (Mamá) -->
+          <div class="game-side side-left" id="side-left" onclick="clickLeft()">
+            <div class="heart-icon" id="heart-left">❤️</div>
+            <div style="font-size: 12px; margin-top: 5px;">Mamá</div>
+            <div class="score" id="score-left">0</div>
+          </div>
+          <!-- Lado Derecho (Hermana) -->
+          <div class="game-side" id="side-right" onclick="clickRight()">
+            <div class="heart-icon" id="heart-right">💖</div>
+            <div style="font-size: 12px; margin-top: 5px;">Hermana</div>
+            <div class="score" id="score-right">0</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PANTALLA: COSAS DE PAPÁ (ESPERANDO FOTOS) -->
+    <div id="screen-lo-mejor" class="screen">
+      <div class="photo-grid">
+        <div class="photo-card"><span>🏋️‍♂️</span>Ejercicio</div>
+        <div class="photo-card"><span>🏍️</span>En Moto</div>
+        <div class="photo-card"><span>👨‍👩‍👧‍👦</span>Familia</div>
+        <div class="photo-card"><span>🎬</span>Películas</div>
+        <div class="photo-card"><span>🏎️</span>Conducir</div>
+        <div class="photo-card"><span>👮‍♂️</span>Policía</div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    // Navegación
+    function navigate(screenId) {
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      document.getElementById('screen-' + screenId).classList.add('active');
+      
+      const titles = {
+        'home': 'Inicio',
+        'gracias': 'Gracias papá',
+        'minijuegos': 'Minijuego',
+        'lo-mejor': 'Cosas de papá'
+      };
+      document.getElementById('header-title').innerText = titles[screenId];
+      document.getElementById('dropdown-menu').classList.remove('active');
+    }
+
+    function toggleMenu() {
+      document.getElementById('dropdown-menu').classList.toggle('active');
+    }
+
+    // Lógica del Minijuego
+    let scoreL = 0;
+    let scoreR = 0;
+
+    function clickLeft() {
+      scoreL++;
+      document.getElementById('score-left').innerText = scoreL;
+      animateHeart('heart-left');
+    }
+
+    function clickRight() {
+      scoreR++;
+      document.getElementById('score-right').innerText = scoreR;
+      animateHeart('heart-right');
+    }
+
+    function animateHeart(id) {
+      const h = document.getElementById(id);
+      h.style.transform = 'scale(1.4)';
+      setTimeout(() => h.style.transform = 'scale(1)', 100);
+    }
+
+    // Soporte para Clic Izquierdo / Derecho en PC
+    const gameWin = document.getElementById('game-window');
+    gameWin.addEventListener('contextmenu', function(e) {
+      e.preventDefault(); // Bloquea menú del clic derecho
+      clickRight();
+    });
+  </script>
+
+</body>
+</html>
