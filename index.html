@@ -4,6 +4,18 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Feliz Cumpleaños Papá 🎂</title>
+  
+  <!-- Configuración PWA y Web App (Android & iPhone) -->
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Papá 34">
+  <meta name="theme-color" content="#050806">
+
+  <!-- ICONO DE LA APP (Generado por SVG con estilo Verde Futurist/Gamer) -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23050806'/><rect width='90' height='90' x='5' y='5' rx='20' fill='%2300e676' opacity='0.15'/><text x='50' y='68' font-size='55' text-anchor='middle'>🎂</text></svg>">
+  <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23050806'/><rect width='90' height='90' x='5' y='5' rx='20' fill='%2300e676' opacity='0.2'/><text x='50' y='68' font-size='55' text-anchor='middle'>🎂</text></svg>">
+
   <style>
     * {
       box-sizing: border-box;
@@ -27,7 +39,6 @@
       overflow-x: hidden;
     }
 
-    /* Layout Adaptable Total (Se ajusta al 100% en PC o Celular Horizontal/Vertical) */
     .app-container {
       width: 100%;
       height: 100vh;
@@ -97,7 +108,7 @@
       flex-direction: column;
       justify-content: center;
       align-items: center;
-      gap: 25px;
+      gap: 20px;
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.4s ease;
@@ -119,14 +130,14 @@
     }
 
     .menu-item {
-      font-size: 24px;
+      font-size: 22px;
       font-weight: 800;
       color: #ffffff;
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(0, 230, 118, 0.3);
-      padding: 16px 40px;
+      padding: 15px 30px;
       border-radius: 20px;
-      width: 80%;
+      width: 85%;
       max-width: 400px;
       text-align: center;
       cursor: pointer;
@@ -174,7 +185,19 @@
       margin-bottom: 25px;
     }
 
-    .subtitle { font-size: 20px; font-weight: 600; color: #b0bec5; margin-bottom: 30px; }
+    .subtitle { font-size: 20px; font-weight: 600; color: #b0bec5; margin-bottom: 20px; }
+
+    .pwa-install-banner {
+      background: rgba(0, 230, 118, 0.15);
+      border: 1px solid #00e676;
+      border-radius: 16px;
+      padding: 12px 18px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+      cursor: pointer;
+    }
 
     .nav-buttons {
       display: flex;
@@ -281,7 +304,6 @@
       box-shadow: 0 5px 20px rgba(0, 230, 118, 0.4);
     }
 
-    /* ARENA DE JUEGO MULTITÁCTIL MEJORADA */
     .game-arena {
       display: none;
       flex: 1;
@@ -305,7 +327,7 @@
       display: flex;
       flex: 1;
       gap: 15px;
-      touch-action: none; /* Evita gestos nativos del celular */
+      touch-action: none;
     }
 
     .game-side {
@@ -328,7 +350,6 @@
     .heart-icon { font-size: 60px; transition: transform 0.05s; pointer-events: none; }
     .score { font-size: 42px; font-weight: 900; margin-top: 5px; pointer-events: none; }
 
-    /* RESULTADOS */
     .result-screen {
       display: none;
       flex-direction: column;
@@ -340,7 +361,6 @@
 
     .result-screen.active { display: flex; }
 
-    /* FOTOS Y CARTAS */
     .photo-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
@@ -371,6 +391,23 @@
       padding: 20px;
       margin-bottom: 15px;
     }
+
+    /* MODAL EXPLICATIVO PARA IPHONE */
+    .ios-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      backdrop-filter: blur(15px);
+      z-index: 100;
+      display: none;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .ios-modal.active { display: flex; }
   </style>
 </head>
 <body>
@@ -395,6 +432,7 @@
       <div class="menu-item" onclick="navigate('gracias')">✉️ Gracias Papá</div>
       <div class="menu-item" onclick="navigate('minijuegos')">🎮 Batalla por Papá</div>
       <div class="menu-item" onclick="navigate('lo-mejor')">📸 Cosas de Papá</div>
+      <div class="menu-item" style="border-color: #00e676; background: rgba(0,230,118,0.15);" onclick="installApp()">📲 Guardar App en Pantalla</div>
     </div>
 
     <!-- PANTALLA: HOME -->
@@ -402,6 +440,12 @@
       <div class="home-hero">
         <h1>Feliz cumpleaños</h1>
         <h2>Papá</h2>
+      </div>
+
+      <!-- Banner rápido de instalación -->
+      <div class="pwa-install-banner" onclick="installApp()">
+        <span style="font-size: 14px; font-weight: bold;">📲 Instalar como App en tu cel</span>
+        <span style="font-size: 12px; background: #00e676; color: #000; padding: 4px 10px; border-radius: 10px; font-weight: 900;">Guardar</span>
       </div>
 
       <div class="subtitle">Accede a las siguientes áreas</div>
@@ -428,7 +472,6 @@
       <div class="game-card">
         <div class="game-title">⚔️ Batalla por Papá ⚔️</div>
 
-        <!-- Ajustes iniciales -->
         <div class="game-setup" id="game-setup">
           <p style="text-align: center; font-size: 15px; opacity: 0.9;">
             ¿Quién se queda con el amor de papá hoy? Selecciona el tiempo:
@@ -442,7 +485,6 @@
           <button class="play-start-btn" onclick="startGame()">▶ ¡INICIAR BATALLA!</button>
         </div>
 
-        <!-- Arena de Juego con Eventos de Puntero (Cero Lag Táctil) -->
         <div class="game-arena" id="game-arena">
           <div class="timer-bar" id="timer-display">Tiempo: 10s</div>
           <div class="sides-container" id="sides-container">
@@ -459,7 +501,6 @@
           </div>
         </div>
 
-        <!-- Resultados -->
         <div class="result-screen" id="result-screen">
           <h2 id="winner-title" style="font-size: 30px; color: #00e676; margin-bottom: 10px;">¡Ganador!</h2>
           <p id="winner-desc" style="font-size: 17px; margin-bottom: 25px;">...</p>
@@ -483,6 +524,18 @@
 
   </div>
 
+  <!-- Modal para iPhone -->
+  <div class="ios-modal" id="ios-modal">
+    <div style="font-size: 50px; margin-bottom: 10px;">📲</div>
+    <h3 style="color: #00e676; margin-bottom: 15px;">Cómo guardar en iPhone</h3>
+    <p style="font-size: 15px; line-height: 1.5; margin-bottom: 20px;">
+      1. Toca el botón <b>Compartir</b> en Safari (el cuadro con la flecha arriba ⎋).<br><br>
+      2. Selecciona <b>"Agregar a inicio"</b> ➕.<br><br>
+      ¡Listo! Se guardará como una app con su icono verde y funcionará sin internet.
+    </p>
+    <button class="play-start-btn" style="max-width: 200px;" onclick="closeIosModal()">Entendido</button>
+  </div>
+
   <script>
     // Navegación
     function navigate(screenId) {
@@ -503,7 +556,7 @@
       document.getElementById('fullscreen-menu').classList.toggle('active');
     }
 
-    // Lógica del Minijuego Ultra-Responsivo
+    // Minijuego
     let selectedDuration = 10;
     let timer = 10;
     let scoreL = 0;
@@ -540,7 +593,6 @@
       }, 1000);
     }
 
-    // Registrador de toques de alta velocidad (Pointer Events)
     const btnLeft = document.getElementById('btn-left');
     const btnRight = document.getElementById('btn-right');
 
@@ -563,7 +615,6 @@
     btnLeft.addEventListener('pointerdown', handlePressLeft);
     btnRight.addEventListener('pointerdown', handlePressRight);
 
-    // Soporte para Clic Derecho en PC
     btnRight.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       handlePressRight(e);
@@ -598,9 +649,4 @@
 
     function resetGameSetup() {
       document.getElementById('result-screen').classList.remove('active');
-      document.getElementById('game-setup').style.display = 'flex';
-    }
-  </script>
-
-</body>
-</html>
+      docu
