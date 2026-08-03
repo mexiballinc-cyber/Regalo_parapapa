@@ -5,14 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Feliz Cumpleaños Papá 🎂</title>
   
-  <!-- Configuración App para Android e iPhone (Icono y Pantalla Completa) -->
+  <!-- Configuración App para Android e iPhone -->
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Papá 34">
   <meta name="theme-color" content="#050806">
 
-  <!-- ICONO DE LA APP (Fondo verde neón + Pastel de Cumpleaños) -->
+  <!-- ICONO DE LA PÁGINA/APP -->
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23050806'/><rect width='90' height='90' x='5' y='5' rx='20' fill='%2300e676' opacity='0.2'/><text x='50' y='68' font-size='55' text-anchor='middle'>🎂</text></svg>">
   <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect width='100' height='100' rx='25' fill='%23050806'/><rect width='90' height='90' x='5' y='5' rx='20' fill='%2300e676' opacity='0.2'/><text x='50' y='68' font-size='55' text-anchor='middle'>🎂</text></svg>">
 
@@ -219,6 +219,62 @@
       background: rgba(0, 230, 118, 0.2);
     }
 
+    /* ESTILO DE CHAT / MENSAJES (BASADO EN TU BOCETO) */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+      padding-bottom: 30px;
+    }
+
+    .chat-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      width: 100%;
+    }
+
+    .chat-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      border: 2px solid #00e676;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      flex-shrink: 0;
+      box-shadow: 0 0 10px rgba(0, 230, 118, 0.3);
+    }
+
+    .chat-bubble {
+      background: rgba(20, 35, 25, 0.7);
+      border: 1px solid rgba(0, 230, 118, 0.4);
+      backdrop-filter: blur(10px);
+      border-radius: 4px 20px 20px 20px;
+      padding: 16px;
+      flex: 1;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .chat-sender {
+      font-size: 14px;
+      font-weight: 800;
+      color: #00e676;
+      margin-bottom: 6px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .chat-text {
+      font-size: 15px;
+      line-height: 1.5;
+      color: #e0ffe8;
+      white-space: pre-line;
+    }
+
     /* MINIJUEGO */
     .game-card {
       background: rgba(10, 20, 15, 0.6);
@@ -371,15 +427,6 @@
 
     .photo-card span { font-size: 38px; margin-bottom: 8px; }
 
-    .chat-bubble {
-      background: rgba(255, 255, 255, 0.07);
-      border: 1px solid rgba(255, 255, 255, 0.18);
-      backdrop-filter: blur(10px);
-      border-radius: 20px;
-      padding: 20px;
-      margin-bottom: 15px;
-    }
-
     .ios-modal {
       position: fixed;
       inset: 0;
@@ -438,13 +485,25 @@
       </div>
     </div>
 
-    <!-- PANTALLA: GRACIAS PAPÁ -->
+    <!-- PANTALLA: GRACIAS PAPÁ (INTERFAZ DE CHAT DE TU BOCETO) -->
     <div id="screen-gracias" class="screen">
-      <div class="chat-bubble">
-        <h3>⏳ Cargando testimonios...</h3>
-        <p style="margin-top: 8px; font-size: 15px; opacity: 0.8;">
-          Aquí irán las palabras de la familia felicitándote por tus 34 años.
-        </p>
+      <div class="chat-container">
+        
+        <!-- Mensaje de Hijo -->
+        <div class="chat-row">
+          <div class="chat-avatar">👦🏻</div>
+          <div class="chat-bubble">
+            <div class="chat-sender">Hijo</div>
+            <div class="chat-text">Feliz cumpleaños papá, espero que se la pase muy bien.
+
+Le quisiera decir lo mucho que lo amo, y darle las gracias por lo que me ha enseñado yo no sería la persona que soy el mismo, por todo lo que me ha enseñado como andar en moto, el trabajo la educación.
+
+Gracias por ser siempre el mejor papá.
+
+Lo amo mucho y feliz cumpleaños y que cumpla muchos más. ❤️</div>
+          </div>
+        </div>
+
       </div>
     </div>
 
@@ -471,12 +530,12 @@
           <div class="sides-container" id="sides-container">
             <div class="game-side" id="btn-left">
               <div class="heart-icon" id="heart-left">❤️</div>
-              <div style="font-size: 14px; font-weight: bold; margin-top: 5px;">Mamá</div>
+              <div style="font-size: 16px; font-weight: bold; margin-top: 5px;">Emma</div>
               <div class="score" id="score-left">0</div>
             </div>
             <div class="game-side" id="btn-right">
               <div class="heart-icon" id="heart-right">💖</div>
-              <div style="font-size: 14px; font-weight: bold; margin-top: 5px;">Hermana</div>
+              <div style="font-size: 16px; font-weight: bold; margin-top: 5px;">Diana</div>
               <div class="score" id="score-right">0</div>
             </div>
           </div>
@@ -499,7 +558,8 @@
         <div class="photo-card"><span>👨‍👩‍👧‍👦</span>Familia</div>
         <div class="photo-card"><span>🎬</span>Películas</div>
         <div class="photo-card"><span>🏎️</span>Conducir</div>
-        <div class="photo-card"><span>👮‍♂️</span>Policía</div>
+        <div class="photo-card"><span>🎮</span>Call of Duty</div>
+        <div class="photo-card"><span>🐕</span>Perros</div>
       </div>
     </div>
 
@@ -519,7 +579,7 @@
   </div>
 
   <script>
-    // Navegación fluida
+    // Navegación
     function navigate(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       document.getElementById('screen-' + screenId).classList.add('active');
@@ -614,36 +674,4 @@
       document.getElementById('game-arena').classList.remove('active');
       document.getElementById('result-screen').classList.add('active');
 
-      const title = document.getElementById('winner-title');
-      const desc = document.getElementById('winner-desc');
-
-      if (scoreL > scoreR) {
-        title.innerText = "🏆 ¡Gana Mamá!";
-        desc.innerText = `Mamá se lleva a papá con ${scoreL} clics vs ${scoreR} de tu hermana.`;
-      } else if (scoreR > scoreL) {
-        title.innerText = "🏆 ¡Gana tu Hermana!";
-        desc.innerText = `Tu hermana se lleva a papá con ${scoreR} clics vs ${scoreL} de mamá.`;
-      } else {
-        title.innerText = "🤝 ¡Empate Técnico!";
-        desc.innerText = `Ambas demostraron el mismo amor con ${scoreL} clics. ¡Papá las quiere a ambas por igual!`;
-      }
-    }
-
-    function resetGameSetup() {
-      document.getElementById('result-screen').classList.remove('active');
-      document.getElementById('game-setup').style.display = 'flex';
-    }
-
-    // Modal para guardar icono
-    function showAppGuide() {
-      document.getElementById('ios-modal').classList.add('active');
-      document.getElementById('fullscreen-menu').classList.remove('active');
-    }
-
-    function closeAppGuide() {
-      document.getElementById('ios-modal').classList.remove('active');
-    }
-  </script>
-
-</body>
-</html>
+      const
